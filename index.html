@@ -6,29 +6,30 @@
       <script>
        function timestamp() { var response = document.getElementById("g-recaptcha-response"); if (response == null || response.value.trim() == "") {var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
       </script>
+      <script src = "./validation.js"></script>
 
     <title>Lead form</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" autocomplete="off">
+    <form id = "form" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" autocomplete="off" onSubmit="return formValidation();">
   
       <input type=hidden name='captcha_settings' value='{"keyname":"SuccessMotors","fallback":"true","orgId":"00D5i000005ooRB","ts":""}'>
       <input type=hidden name="oid" value="00D5i000005ooRB">
       <input type=hidden name="retURL" value="http://"> 
 
       <div id = "form">
-        <div class = "form"><label for="company">Company</label><input class = "inp" id="company" maxlength="40" name="company" size="20" type="text" /><br></div>
+        <div class = "form"><label for="company">Company</label><input required="required" class = "inp" id="company" maxlength="40" name="company" size="20" type="text" /><br></div>
   
-        <div class = "form"><label for="first_name">First Name</label><input class = "inp" id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br></div>
+        <div class = "form"><label for="first_name">First Name</label><input required="required" class = "inp" id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br></div>
       
-        <div class = "form"><label for="last_name">Last Name</label><input class = "inp" id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br></div>
+        <div class = "form"><label for="last_name">Last Name</label><input required="required" class = "inp" id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br></div>
       
-        <div class = "form"><label for="email">Email</label><input class = "inp" id="email" maxlength="80" name="email" size="20" type="text" /><br></div>
+        <div class = "form"><label for="email">Email</label><input required="required" class = "inp" id="email" maxlength="80" name="email" size="20" type="text" /><br></div>
       
-        <div class = "form"><label for="phone">Phone</label><input class = "inp" id="phone" maxlength="40" name="phone" size="20" type="text" /><br></div>
+        <div class = "form"><label for="phone">Phone</label><input required="required" class = "inp" id="phone" maxlength="40" name="phone" size="20" type="text" /><br></div>
       
-        <div class = "form"><label for="product">Product</label><select id="00N5i00000Bj5k1" name="00N5i00000Bj5k1" title="Product"></div>
+        <div class = "form"><label for="product">Product</label><select required="required" id="00N5i00000Bj5k1" name="00N5i00000Bj5k1" title="Product"></div>
         <option value="">--None--</option>
         <option value="R001C1">R001C1</option>
         <option value="R002C2">R002C2</option>

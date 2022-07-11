@@ -9,9 +9,6 @@ body{
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-}
-
-#form{
   color: #ebc2af;
   font-size: large;
   font-family: Arial;
@@ -35,6 +32,8 @@ input {
 
 .form{
   text-align: right;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 
 label{
