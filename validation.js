@@ -16,13 +16,17 @@ function formValidation(){
 
 function validation(regexp, field){
   const element = document.getElementById(field);
-  if(!regexp.test(element.value))
-    element.style.border = "solid 2px red"
+  if(!regexp.test(element.value)){
+    element.style.borderTop = 'none';
+    element.style.borderLeft = 'none';
+    element.style.borderRight = 'none';
+    element.style.borderBottom = 'solid 2px red';
+  }
   else{
     element.style.borderTop = 'none';
     element.style.borderLeft = 'none';
     element.style.borderRight = 'none';
-    element.style.borderBottom = 'solid 1px rgb(253, 148, 28)';
+    element.style.borderBottom = 'solid 2px green';
   }
   return regexp.test(element.value);
 }

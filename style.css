@@ -12,36 +12,33 @@ body{
   color: #ebc2af;
   font-size: large;
   font-family: Arial;
+  background-color: rgb(108, 168, 47);
+  border-radius: 19px;
 }
 
 .inp{
-  background-color: olivedrab;
-  border-bottom: solid 1px rgb(253, 148, 28);
+  background-color: rgb(108, 168, 47);
+  border-bottom: solid 2px rgb(253, 148, 28);
   border-top: none;
   border-right: none;
   border-left: none;
 }
 
+table{
+  border-spacing: 11px 11px;
+  text-align: center;
+}
+
 input {
   font-size: large;
-  color: #ebb69e;
+  color: burlywood;
   text-align: center;
   left: 25%;
   outline: none;
 }
 
-.form{
-  text-align: right;
-  margin-top: 2%;
-  margin-bottom: 2%;
-}
-
-label{
-  float: left;
-}
-
 select{
-  background-color: olivedrab;
+  background-color: rgb(108, 168, 47);
   color: #ebc2af;
   outline: none;
   border: none;
@@ -51,20 +48,21 @@ select{
   text-align: center;
 }
 
+#sub{
+  background-color: #ebc2af;
+  border: solid 1px #ebc2af;
+  color: rgb(110, 110, 2);
+  border-radius: 8px;
+}
+
 #sub:hover{
-  background-color: olivedrab;
+  background-color: rgb(85, 85, 1);
   border: solid 1px rgb(85, 85, 1);
   color: #ebc2af;
   border-radius: 8px;
 }
 
-#sub{
-  background-color: olivedrab;
-  border: solid 1px #ebc2af;
-  color: rgb(85, 85, 1);
-  border-radius: 8px;
-}
-
-.g-recaptcha{
-  margin-top: 4%;
+::placeholder{
+  color: burlywood;
+  font-style: italic;
 }

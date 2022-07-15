@@ -26,12 +26,13 @@
       <input type=hidden name="retURL" value="http://"> 
 
       <div id = "form">
-        <div class = "form"><label for="company">Company</label><input required="required" placeholder = "Company example" class = "inp" id="company" maxlength="40" name="company" size="20" type="text" /><br></div>
-        <div class = "form"><label for="first_name">First Name</label><input required="required" placeholder = "Name" class = "inp" id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br></div>
-        <div class = "form"><label for="last_name">Last Name</label><input required="required" placeholder = "Surname" class = "inp" id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br></div>
-        <div class = "form"><label for="email">Email</label><input required="required" placeholder = "example@gmail.com" class = "inp" id="email" maxlength="80" name="email" size="20" type="text" /><br></div>
-        <div class = "form"><label for="phone">Phone</label><input required="required" placeholder = "8 029 111 11 11" class = "inp" id="phone" maxlength="40" name="phone" size="20" type="text" /><br></div>
-        <div class = "form"><label for="product">Product</label><select required="required" id="00N5i00000Bj5k1" name="00N5i00000Bj5k1" title="Product"></div>
+        <table>
+        <tr><td nowrap><label for="company">Company</label></td><td><input required="required" placeholder = "Company example" class = "inp" id="company" maxlength="40" name="company" size="20" type="text" /></td></tr>
+        <tr><td nowrap><label for="first_name">First Name</label></td><td><input required="required" placeholder = "Name" class = "inp" id="first_name" maxlength="40" name="first_name" size="20" type="text" /></td></tr>
+        <tr><td nowrap><label for="last_name">Last Name</label></td><td><input required="required" placeholder = "Surname" class = "inp" id="last_name" maxlength="80" name="last_name" size="20" type="text" /></td></tr>
+        <tr><td nowrap><label for="email">Email</label></td><td><input required="required" placeholder = "example@gmail.com" class = "inp" id="email" maxlength="80" name="email" size="20" type="text" /></td></tr>
+        <tr><td nowrap><label for="phone">Phone</label></td><td><input required="required" placeholder = "8 029 111 11 11" class = "inp" id="phone" maxlength="40" name="phone" size="20" type="text" /></td></tr>
+        <tr><td><div class = "form"><label for="product">Product</label></td><td><select required="required" id="00N5i00000Bj5k1" name="00N5i00000Bj5k1" title="Product"></div>
         <option value="">--None--</option>
         <option value="R001C1">Renault Logan</option>
         <option value="R002C2">Renault Logan Stepway</option>
@@ -65,8 +66,9 @@
         <option value="VAG010A2">Carpets Skoda</option>
         <option value="L005A1">Carpets Lada</option>
         <option value="MI001A1">Phone holder Xiaomi</option>
-        </select><br>
-        <div class="g-recaptcha" data-sitekey="6Le5998gAAAAAERCGNafGQUr1pYM2X051IpaX5ik"></div><br>
+        </select></td></tr>
+        <tr><td colspan="2" align = "center"><div class="g-recaptcha" data-sitekey="6Le5998gAAAAAERCGNafGQUr1pYM2X051IpaX5ik"></div></td></tr>
+        </table>
         <div class = "button"><input id = "sub" type="submit" name="submit" value="Submit"></div>
       </div>
     </form>
