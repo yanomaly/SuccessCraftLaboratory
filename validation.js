@@ -10,6 +10,7 @@ function formValidation(){
   const lastNameDecision = validation(lastNameRegExp, 'last_name');
   const emailDecision = validation(emailRegExp, 'email');
   const phoneDecision = validation(phoneRegExp, 'phone');
+  reCaptchaAlert();
   return companyDecision && firstNameDecision && lastNameDecision && emailDecision && phoneDecision;
 }
 
@@ -24,4 +25,11 @@ function validation(regexp, field){
     element.style.borderBottom = 'solid 1px rgb(253, 148, 28)';
   }
   return regexp.test(element.value);
+}
+
+function reCaptchaAlert(){
+  $recaptcha = document.querySelector('#g-recaptcha-response');
+  if($recaptcha){
+    alert('Please fill in the reCaptcha')
+  }
 }
