@@ -10,8 +10,8 @@ function formValidation(){
   const lastNameDecision = validation(lastNameRegExp, 'last_name');
   const emailDecision = validation(emailRegExp, 'email');
   const phoneDecision = validation(phoneRegExp, 'phone');
-  reCaptchaAlert();
-  return companyDecision && firstNameDecision && lastNameDecision && emailDecision && phoneDecision;
+  const reCaptchaDecision = reCaptchaValidation();
+  return reCaptchaDecision && companyDecision && firstNameDecision && lastNameDecision && emailDecision && phoneDecision;
 }
 
 function validation(regexp, field){
@@ -27,9 +27,13 @@ function validation(regexp, field){
   return regexp.test(element.value);
 }
 
-function reCaptchaAlert(){
-  $recaptcha = document.querySelector('#g-recaptcha-response');
-  if($recaptcha){
-    alert('Please fill in the reCaptcha')
+function reCaptchaValidation(){
+  recaptcha = document.getElementById('g-recaptcha-response');
+  if(recaptcha){
+    alert('Please fill in the reCaptcha');
+    return false;
+  }
+  else{
+    return true;
   }
 }
