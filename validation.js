@@ -29,11 +29,11 @@ function validation(regexp, field){
 
 function reCaptchaValidation(){
   recaptcha = document.getElementById('g-recaptcha-response');
-  if(recaptcha){
-    alert('Please fill in the reCaptcha');
-    return false;
+  if(recaptcha.value != ''){
+    return true;
   }
   else{
-    return true;
+    alert('Please fill in the reCaptcha');
+    return false;
   }
 }
