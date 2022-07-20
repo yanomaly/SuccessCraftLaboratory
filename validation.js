@@ -1,8 +1,8 @@
-const companyRegExp = /[A-Z0-9][a-zA-Z0-9- ]+/;
-const firstNameRegExp = /[A-Z][a-zA-Z- ]+/;
-const lastNameRegExp = /[A-Z][a-zA-Z- ]+/
+const companyRegExp = /^[A-Z0-9][a-zA-Z0-9- ]+$/;
+const firstNameRegExp = /^[A-Z][a-zA-Z- ]+$/;
+const lastNameRegExp = /^[A-Z][a-zA-Z- ]+$/
 const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.com)$/;
-const phoneRegExp = /[1-8][0-9]{10}/;
+const phoneRegExp = /^[1-8][0-9]{10}$/;
 
 function formValidation(){
   const companyDecision = validation(companyRegExp, 'company');
