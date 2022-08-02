@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import generatePdf from '@salesforce/apex/CreatePDFInvoice.generatePdf';
 
@@ -9,9 +9,11 @@ export default class HeadlessQuickAction extends LightningElement {
         let params = {
             "idOpportunity": this.recordId
         };
+        
+        console.log(this.recordId);
 
         generatePdf(params)
-        .then(id => {
+        .then(result => {
             const event = new ShowToastEvent({
                 title : "Invoice Generation",
                 message : "Invoice was generated successfully",
