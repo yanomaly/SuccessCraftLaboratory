@@ -1,13 +1,13 @@
 public with sharing class EmailSender {
     
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static Opportunity opportunityDB(String opportunityId){
         Opportunity opportunity = [SELECT Invoice_Number__c FROM Opportunity WHERE Id = :opportunityId LIMIT 1];
 
         return opportunity;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static Contact contactDB(String opportunityId){
         OpportunityContactRole opportunityContact = [SELECT ContactId FROM OpportunityContactRole WHERE OpportunityId = :opportunityId AND IsPrimary = true LIMIT 1];
         Contact contact = [SELECT Email, Name, Id FROM Contact WHERE Id = :opportunityContact.ContactId];
@@ -15,7 +15,7 @@ public with sharing class EmailSender {
         return contact;
     }
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static String getMessageBody(String opportunityId){
         Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate('00X5i000000MUOkEAO', contactDB(opportunityId).Id, opportunityId);
 
@@ -35,6 +35,8 @@ public with sharing class EmailSender {
         semail.setToAddresses(sendingTo); 
         semail.setSubject(opportunity.Invoice_Number__c); 
         semail.setPlainTextBody(body);
+        semail.setReplyTo('invoiceconfirmation@f-1rk7dvztvq4q9uxx96occd147nvayv2h7o2mkl1j58wxds4jdf.5i-5oorbeay.ap26.apex.salesforce.com');
+        semail.setSenderDisplayName('Invoice Confirmation');
         semail.setFileAttachments(new Messaging.EmailFileattachment[]{createAttachment(opportunity)});
         return semail;
     }

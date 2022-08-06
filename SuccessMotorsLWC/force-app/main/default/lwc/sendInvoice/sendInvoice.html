@@ -1,22 +1,17 @@
-<!-- sldsValidatorIgnore -->
 <template>
+  <p style = "display: none;">{recordId}</p>
   <lightning-quick-action-panel header="Email Sender">
-    <p style = "display: none;">{recordId}</p>
+    <template if:true={contact}>
     <lightning-input type="text" label="Consumer name" value={contact.Name} readonly></lightning-input>
     <lightning-input type="text" label="Consumer email" value={contact.Email} readonly></lightning-input>
+    </template>
+    <template if:true={opportunity}>
     <lightning-input type="text" label="Email Subject" value={opportunity.Invoice_Number__c} readonly></lightning-input>
+    </template>
     <lightning-textarea label="Email Body" value={emailBody} name="emailBody"></lightning-textarea>
       <div slot="footer">
-          <lightning-button
-              variant="neutral"
-              label="View Invoive"
-              onclick={previewHandle}
-          ></lightning-button>
-          <lightning-button
-              variant="brand"
-              label="Send Email"
-              onclick={sendHandle}
-          ></lightning-button>
+          <lightning-button variant="neutral" label="View Invoive" onclick={previewHandle}></lightning-button>
+          <lightning-button variant="brand" label="Send Email" onclick={sendHandle}></lightning-button>
       </div>
   </lightning-quick-action-panel>
 </template>

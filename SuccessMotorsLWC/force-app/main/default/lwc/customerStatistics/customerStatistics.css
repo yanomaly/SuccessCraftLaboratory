@@ -1,0 +1,39 @@
+.input{
+    width: 25%;
+    position: relative;
+    top: 20%;
+    left: 10%;
+}
+
+.result{
+  position: relative;
+  left: 40%;
+  top: -9%;
+  width: 40%;
+}
+
+h1{
+  color: black;
+  font-size: large;
+  margin-top: 2%;
+}
+
+lightning-input{
+  margin-bottom: 5%;
+}
+
+.search{
+  position: relative;
+  left: 84%;
+}
+
+.pageControlls{
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 10%;
+}
+
+lightning-button-group{
+  position: relative;
+  left: 4%;
+}

@@ -9,8 +9,6 @@ export default class HeadlessQuickAction extends LightningElement {
         let params = {
             "idOpportunity": this.recordId
         };
-        
-        console.log(this.recordId);
 
         generatePdf(params)
         .then(result => {
@@ -22,13 +20,15 @@ export default class HeadlessQuickAction extends LightningElement {
             this.dispatchEvent(event);
         })
         .catch(error => {
-            const event = new ShowToastEvent({
-                title: "Error on generation",
-                message: error.body.message,
-                variant: "error",
-                mode: 'sticky',
-            });
-            this.dispatchEvent(event);
+            if(error.body){
+                const event = new ShowToastEvent({
+                    title: "Error on generation",
+                    message: error.body.message,
+                    variant: "error",
+                    mode: 'sticky',
+                });
+                this.dispatchEvent(event);
+            }
         });
     }
 }
