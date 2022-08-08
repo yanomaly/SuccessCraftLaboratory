@@ -13,7 +13,7 @@ export default class CustomerStatistics extends LightningElement {
   @track accountOpportunity = [];
   @track pageNumber = 0;
   @track pageData = [];
-  @track pageSize = 2;
+  @track pageSize = 10;
 
   @wire(getAccounts, { accountId: '$recordId' })
     wiredAccounts(result) {

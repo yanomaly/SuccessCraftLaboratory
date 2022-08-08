@@ -39,7 +39,6 @@ export default class SendInvoice extends NavigationMixin (LightningElement) {
   wiredBody(result) {
     if (result.data) {
     this.emailBody = result.data.replace(/<[^>]+>/g, '').replace(/\n{2,}/, '');
-    console.log(this.emailBody);
   }else if (result.error) {
     this.errorHandler(result.error);
   }
@@ -70,21 +69,21 @@ export default class SendInvoice extends NavigationMixin (LightningElement) {
     };
 
     invoiceDB(param)
-    .then(result => {this.invoiceId = result;})
+    .then(result => {
+      this.invoiceId = result;
+      this[NavigationMixin.Navigate]({ 
+        type:'standard__namedPage',
+        attributes:{ 
+            pageName:'filePreview'
+        },
+        state:{ 
+          selectedRecordId: this.invoiceId
+        }
+    })
+    })
     .catch(error => {
       this.errorHandler(error)
-  })
-
-    this[NavigationMixin.Navigate]({ 
-      type:'standard__namedPage',
-      attributes:{ 
-          pageName:'filePreview'
-      },
-      state:{ 
-        selectedRecordId: this.invoiceId
-      }
-  })
-  }
+  })}
 
   errorHandler(error){
     if(error.body){

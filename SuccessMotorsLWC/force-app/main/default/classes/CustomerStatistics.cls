@@ -27,7 +27,7 @@ public with sharing class CustomerStatistics {
         for(Opportunity temp: opps){
             total += temp.Amount;
         }
-        return total;
+        return total.setScale(2);
     }
 
     @AuraEnabled(cacheable=true)
