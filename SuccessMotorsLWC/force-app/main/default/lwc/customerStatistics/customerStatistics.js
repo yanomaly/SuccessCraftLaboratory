@@ -12,8 +12,8 @@ export default class CustomerStatistics extends LightningElement {
   @track products;
   @track accountOpportunity = [];
   @track pageNumber = 0;
-  @track pageData;
-  pageSize = 10;
+  @track pageData = [];
+  @track pageSize = 2;
 
   @wire(getAccounts, { accountId: '$recordId' })
     wiredAccounts(result) {
@@ -24,6 +24,7 @@ export default class CustomerStatistics extends LightningElement {
             else
               this.accountOpportunity.push({value: undefined, key: temp});
           }
+          console.log('accOpp ' + this.accountOpportunity);
           this.updatePage();
         } else if (result.error) {
           this.errorHandler(result.error);
@@ -31,7 +32,6 @@ export default class CustomerStatistics extends LightningElement {
     }
 
     searchHandle(){
-
       this.accountName = this.template.querySelectorAll("lightning-input")[0].value;
       this.opportunitySum = this.template.querySelectorAll("lightning-input")[1].value.length === 0
       ? undefined 
@@ -41,22 +41,23 @@ export default class CustomerStatistics extends LightningElement {
         "amount": this.opportunitySum, "name": this.accountName
       };
 
-      console.log(params);
+      this.pageNumber = 0;
+      this.accountOpportunity = [];
 
       sortAccounts(params)
       .then(result => {
-        console.log(result);
         if (result) {
-          this.accountOpportunity = [];
         for(let temp in result){
-          if(result.data[temp].length !== 0)
-            this.accountOpportunity.push({value: result.data[temp], key: temp});
+          if(result[temp].length !== 0)
+            this.accountOpportunity.push({value: result[temp], key: temp});
           else
             this.accountOpportunity.push({value: undefined, key: temp});
-        }}
+        }
+        console.log('accOpp ' + this.accountOpportunity);
         this.updatePage();
-      })
+      }})
       .catch(error => {
+        if(error)
           this.errorHandler(error);
     });
 
@@ -95,8 +96,7 @@ export default class CustomerStatistics extends LightningElement {
     }
 
     updatePage(){
-      this.pageData = this.accountOpportunity.slice(this.pageNumber * this.pageSize, this.pageNumber * this.pageSize + this.pageSize);
-      console.log(this.PageData);
+      this.pageData = this.accountOpportunity.slice(this.pageNumber * this.pageSize, Math.min(this.accountOpportunity.length, this.pageNumber * this.pageSize + this.pageSize));
     }
 
     errorHandler(error){

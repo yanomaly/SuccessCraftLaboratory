@@ -19,12 +19,6 @@ public with sharing class CreatePDFInvoice {
         return objDocId;
     }
 
-    public static Blob generatePdfBody(Opportunity objOpportunity){
-        PageReference objPagePdf = Page.invoiceTemplate;
-        objPagePdf.getParameters().put('Id', objOpportunity.Id);
-        return objPagePdf.getContent();
-    }
-
     public static ContentVersion createContentVersion(Opportunity objOpportunity, Blob content){
         ContentVersion objVersion = new ContentVersion();
         objVersion.ContentLocation = 'S';
@@ -32,6 +26,17 @@ public with sharing class CreatePDFInvoice {
         objVersion.Title = objOpportunity.Invoice_Number__c;
         objVersion.VersionData = content;
         return objVersion;
+    }
+
+    public static Blob generatePdfBody(Opportunity objOpportunity){
+        PageReference objPagePdf = Page.invoiceTemplate;
+        objPagePdf.getParameters().put('Id', objOpportunity.Id);
+        Blob pdfBody;
+        if(Test.isRunningTest())
+            pdfBody = Blob.valueOf('Unit.Test');
+        else 
+            pdfBody = objPagePdf.getContent();
+        return pdfBody;
     }
 
     public static ContentDocumentLink createContentDocumentLink(Opportunity objOpportunity, Id objDocId){
