@@ -24,7 +24,6 @@ export default class CustomerStatistics extends LightningElement {
             else
               this.accountOpportunity.push({value: undefined, key: temp});
           }
-          console.log('accOpp ' + this.accountOpportunity);
           this.updatePage();
         } else if (result.error) {
           this.errorHandler(result.error);
@@ -46,6 +45,7 @@ export default class CustomerStatistics extends LightningElement {
 
       sortAccounts(params)
       .then(result => {
+        console.log(result);
         if (result) {
         for(let temp in result){
           if(result[temp].length !== 0)
@@ -53,7 +53,6 @@ export default class CustomerStatistics extends LightningElement {
           else
             this.accountOpportunity.push({value: undefined, key: temp});
         }
-        console.log('accOpp ' + this.accountOpportunity);
         this.updatePage();
       }})
       .catch(error => {

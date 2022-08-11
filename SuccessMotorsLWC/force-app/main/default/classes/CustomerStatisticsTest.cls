@@ -6,10 +6,14 @@ public class CustomerStatisticsTest {
       insert accountV1;
       Account accountV2 = new Account(Name = 'AV2');
       insert accountV2;
+      Account accountV3 = new Account(Name = 'AV3');
+      insert accountV3;
       Opportunity opportunityV1 = new Opportunity(Name = 'OV1', StageName = 'Closed Won', CloseDate = date.today(), Amount = 1000.0, AccountId = accountV1.Id);
       insert opportunityV1;
       Opportunity opportunityV2 = new Opportunity(Name = 'OV2', StageName = 'Closed Lost', CloseDate = date.today(), Amount = 900.0, AccountId = accountV1.Id);
       insert opportunityV2;
+      Opportunity opportunityV3 = new Opportunity(Name = 'OV3', StageName = 'Closed Won', CloseDate = date.today(), Amount = 1900.0, AccountId = accountV3.Id);
+      insert opportunityV3;
     }
 
     @isTest
@@ -34,7 +38,7 @@ public class CustomerStatisticsTest {
 
     @isTest
     public static void findAccountsByTotalAmountPositiveTest(){
-        String amount = '1900.00';
+        String amount = '1000.00';
 
         Test.startTest();
         List<Account> result = CustomerStatistics.findAccountsByTotalAmount(amount);
@@ -57,14 +61,14 @@ public class CustomerStatisticsTest {
 
     @isTest
     public static void findAccountsByNamePositiveTest(){
-        String name = 'AV2';
+        String name = 'AV3';
 
         Test.startTest();
         List<Account> result = CustomerStatistics.findAccountsByName(name);
         Test.stopTest();
 
         System.assertEquals(1, result.Size(), 'Incorrect result size');
-        System.assertEquals('AV2', result[0].Name, 'Incorrect account name');
+        System.assertEquals('AV3', result[0].Name, 'Incorrect account name');
     }
 
     @isTest
@@ -87,26 +91,25 @@ public class CustomerStatisticsTest {
         Map<String, List<Opportunity>> result = CustomerStatistics.sortAccounts(amount, name);
         Test.stopTest();
 
-        System.assertEquals(1, result.size(), 'Incorrect result size');
+        System.assertEquals(0, result.size(), 'Incorrect result size');
     }
 
     @isTest
     public static void countTotalTest(){
-        Account account = [SELECT Name, Id FROM Account WHERE Name = 'AV1'];
-        List<Opportunity> testData = [SELECT Amount FROM Opportunity WHERE AccountId =: account.Id];
+        Account account = [SELECT Name, Id, (SELECT Amount FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name = 'AV1'];
 
         Test.startTest();
-        Decimal result = CustomerStatistics.countTotal(testData);
+        Decimal result = CustomerStatistics.countTotal(account.Opportunities);
         Test.stopTest();
 
-        System.assertEquals(1900.00, result, 'Incorrect total amount');
+        System.assertEquals(1000.00, result, 'Incorrect total amount');
     }
 
     @isTest
     public static void createMapTest(){
-        Account account1 = [SELECT Name, Id FROM Account WHERE Name = 'AV1'];
-        Account account2 = [SELECT Name, Id FROM Account WHERE Name = 'AV2'];
-        List<Account> accountList = new List<Account>{account1, account2};
+        Account account1 = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name = 'AV1'];
+        Account account3 = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name = 'AV3'];
+        List<Account> accountList = new List<Account>{account1, account3};
 
         Test.startTest();
         Map<String, List<Opportunity>> result = CustomerStatistics.createMap(accountList);
@@ -132,6 +135,17 @@ public class CustomerStatisticsTest {
 
         Test.startTest();
         Map<String, List<Opportunity>> result = CustomerStatistics.getAccounts(accountId);
+        Test.stopTest();
+
+        System.assertEquals(2, result.size(), 'Incorrect result size');
+    }
+    
+    @isTest
+    public static void sortEmptyAccountsTest(){
+        List<Account> accounts = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account];
+
+        Test.startTest();
+        List<Account> result = CustomerStatistics.sortEmptyAccounts(accounts);
         Test.stopTest();
 
         System.assertEquals(2, result.size(), 'Incorrect result size');

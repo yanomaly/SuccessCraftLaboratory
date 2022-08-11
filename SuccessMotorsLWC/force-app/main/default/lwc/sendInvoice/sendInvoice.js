@@ -18,8 +18,7 @@ export default class SendInvoice extends NavigationMixin (LightningElement) {
   @wire(contactDB, { opportunityId: '$recordId' })
   wiredContact(result) {
     if (result.data) {
-  this.contact = result.data;
-  console.log(this.contact);
+      this.contact = result.data;
     }else if (result.error) {
       this.errorHandler(result.error);
     }
@@ -28,20 +27,19 @@ export default class SendInvoice extends NavigationMixin (LightningElement) {
   @wire(opportunityDB, { opportunityId: '$recordId' })
   wiredOpportunity(result) {
     if (result.data) {
-  this.opportunity = result.data;
-  console.log(this.opportunity);
-}else if (result.error) {
-    this.errorHandler(result.error);
+      this.opportunity = result.data;
+    }else if (result.error) {
+      this.errorHandler(result.error);
+    }
   }
-}
 
   @wire(getMessageBody, { opportunityId: '$recordId' })
   wiredBody(result) {
     if (result.data) {
-    this.emailBody = result.data.replace(/<[^>]+>/g, '').replace(/\n{2,}/, '');
-  }else if (result.error) {
-    this.errorHandler(result.error);
-  }
+      this.emailBody = result.data.replace(/<[^>]+>/g, '').replace(/\n{2,}/, '');
+    }else if (result.error) {
+      this.errorHandler(result.error);
+    }
   }
   
   sendHandle(){
@@ -56,8 +54,9 @@ export default class SendInvoice extends NavigationMixin (LightningElement) {
           title : "Email Sending",
           message : "Email was sent successfully",
           variant : 'success'
-      }); 
-      this.dispatchEvent(event); this.dispatchEvent(new CloseActionScreenEvent());})
+        }); 
+        this.dispatchEvent(event); 
+        this.dispatchEvent(new CloseActionScreenEvent());})
         .catch(error => {
           this.errorHandler(error);
       })

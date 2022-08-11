@@ -2,7 +2,7 @@ public with sharing class CreatePDFInvoice {
     
     @AuraEnabled
     public static Id generatePdf(String idOpportunity){
-        Opportunity objOpportunity = [SELECT Invoice_Number__c, Id FROM Opportunity WHERE Id = :idOpportunity LIMIT 1];
+        Opportunity objOpportunity = [SELECT Invoice_Number__c, Id FROM Opportunity WHERE Id = :idOpportunity];
         Id objDocId;
         ContentVersion objVersion = createContentVersion(objOpportunity, generatePdfBody(objOpportunity));
         List<ContentVersion> objVersionList = [SELECT VersionData FROM ContentVersion WHERE Title = :objOpportunity.Invoice_Number__c AND IsMajorVersion = true];
