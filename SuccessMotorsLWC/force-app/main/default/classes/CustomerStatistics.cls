@@ -47,10 +47,11 @@ public with sharing class CustomerStatistics {
     
     public static List<Account> findAccountsByName(String name){
         List<Account> preResult = new List<Account>();
+        String nameSearch = name + '%';
         if(String.isBlank(name))
             preResult = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account];
         else 
-            preResult = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name =: name];
+            preResult = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name LIKE :nameSearch];
         return sortEmptyAccounts(preResult);   
     }
 
@@ -62,10 +63,14 @@ public with sharing class CustomerStatistics {
             Decimal amount = decimal.valueOf(amountStr);
             List<Account> accounts = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account];
             for(Account temp: accounts)
-                if(amount == countTotal(temp.Opportunities))
+                if(amountComparator(amount, countTotal(temp.Opportunities)))
                     preResult.add(temp);
         }
         return sortEmptyAccounts(preResult);        
+    }
+
+    public static boolean amountComparator(Decimal amount1, Decimal amount2){
+        return String.valueOf(amount2).replace('.', '').startsWith(String.valueOf(amount1).replace('.', ''));
     }
 
     @AuraEnabled(cacheable=true)

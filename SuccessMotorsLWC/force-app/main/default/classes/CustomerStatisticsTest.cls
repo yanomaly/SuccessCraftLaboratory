@@ -12,7 +12,7 @@ public class CustomerStatisticsTest {
       insert opportunityV1;
       Opportunity opportunityV2 = new Opportunity(Name = 'OV2', StageName = 'Closed Lost', CloseDate = date.today(), Amount = 900.0, AccountId = accountV1.Id);
       insert opportunityV2;
-      Opportunity opportunityV3 = new Opportunity(Name = 'OV3', StageName = 'Closed Won', CloseDate = date.today(), Amount = 1900.0, AccountId = accountV3.Id);
+      Opportunity opportunityV3 = new Opportunity(Name = 'OV3', StageName = 'Closed Won', CloseDate = date.today(), Amount = 10000.0, AccountId = accountV3.Id);
       insert opportunityV3;
     }
 
@@ -44,8 +44,7 @@ public class CustomerStatisticsTest {
         List<Account> result = CustomerStatistics.findAccountsByTotalAmount(amount);
         Test.stopTest();
 
-        System.assertEquals(1, result.Size(), 'Incorrect result size');
-        System.assertEquals('AV1', result[0].Name, 'Incorrect account name');
+        System.assertEquals(2, result.Size(), 'Incorrect result size');
     }
 
     @isTest
@@ -61,14 +60,13 @@ public class CustomerStatisticsTest {
 
     @isTest
     public static void findAccountsByNamePositiveTest(){
-        String name = 'AV3';
+        String name = 'AV';
 
         Test.startTest();
         List<Account> result = CustomerStatistics.findAccountsByName(name);
         Test.stopTest();
 
-        System.assertEquals(1, result.Size(), 'Incorrect result size');
-        System.assertEquals('AV3', result[0].Name, 'Incorrect account name');
+        System.assertEquals(2, result.Size(), 'Incorrect result size');
     }
 
     @isTest
@@ -149,5 +147,31 @@ public class CustomerStatisticsTest {
         Test.stopTest();
 
         System.assertEquals(2, result.size(), 'Incorrect result size');
+    }
+
+    @isTest
+    public static void amountComparatorPositiveTest(){
+        Decimal amount1 = 10.1;
+        Decimal amount2 = 10.19;
+
+
+        Test.startTest();
+        Boolean result = CustomerStatistics.amountComparator(amount1, amount2);
+        Test.stopTest();
+
+        System.assert(result, 'Incorrect result');
+    }
+
+    @isTest
+    public static void amountComparatorNegativeTest(){
+        Decimal amount1 = 9.00;
+        Decimal amount2 = 10.19;
+
+
+        Test.startTest();
+        Boolean result = CustomerStatistics.amountComparator(amount1, amount2);
+        Test.stopTest();
+
+        System.assert(!result, 'Incorrect result');
     }
 }

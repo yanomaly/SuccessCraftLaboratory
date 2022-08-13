@@ -122,31 +122,4 @@ public class EmailSenderTest {
 
         System.assertEquals(result, objId, 'Incorrect content document Id');
     }
-
-    @isTest
-    public static void updateOpportunityPositiveTest(){
-        Opportunity opportunity = [SELECT Id, StageName FROM Opportunity WHERE Name = 'Test Opportunity'];
-
-        Test.startTest();
-        Database.SaveResult result = EmailSender.updateOpportunity(opportunity.Id);
-        Test.stopTest();
-
-        Opportunity opportunityResult = [SELECT Id, StageName FROM Opportunity WHERE Id =: opportunity.Id];
-        System.assert(result.isSuccess(), 'Opportunity update error');
-        System.assertEquals('Qualification', opportunityResult.StageName, 'Incorrect Stage Name');
-    }
-
-    @isTest
-    public static void updateOpportunityNegativeTest(){
-        Opportunity opportunity = new Opportunity(Name = 'Negative Test Opportunity', StageName = 'Closed Won', CloseDate = date.today() + 3);
-        insert opportunity;
-
-        Test.startTest();
-        Database.SaveResult result = EmailSender.updateOpportunity(opportunity.Id);
-        Test.stopTest();
-
-        Opportunity opportunityResult = [SELECT Id, StageName FROM Opportunity WHERE Id = : opportunity.Id];
-        System.assert(result.isSuccess(), 'Opportunity update error');
-        System.assertEquals('Closed Won', opportunityResult.StageName, 'Incorrect Stage Name');
-    }
 }

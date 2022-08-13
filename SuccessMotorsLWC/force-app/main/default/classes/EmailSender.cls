@@ -7,7 +7,6 @@ public with sharing class EmailSender {
     @AuraEnabled
     public static Boolean sendEmail(String opportunityId, String body){
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] {createMessage(opportunityDB(opportunityId), contactDB(opportunityId), body)}); 
-        updateOpportunity(opportunityId);
         return true;
     }
 
@@ -52,19 +51,6 @@ public with sharing class EmailSender {
         EmailTemplate template = [SELECT Name, Id FROM EmailTemplate WHERE IsActive = true AND Name =: EMAIL_TEMPLATE_NAME LIMIT 1];
         Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(template.Id, contactDB(opportunityId).Id, opportunityId);
         return email.getHtmlBody();
-    }
-
-    public static Database.SaveResult updateOpportunity(String opportunityId){
-        Opportunity opportunity = [SELECT StageName FROM Opportunity WHERE Id = :opportunityId];
-        DescribeFieldResult optyDescribe = Schema.Opportunity.StageName.getDescribe(); 
-        List<Schema.PicklistEntry> optyPickListEntry = optyDescribe.getPicklistValues();
-        if(!opportunity.StageName.equals('Closed Won') && !opportunity.StageName.equals('Closed Lost'))
-            for(Integer i = 0; i < optyPickListEntry.size() - 3; i++)
-                if(optyPickListEntry[i].getLabel().equals(opportunity.StageName)){
-                    opportunity.StageName = optyPickListEntry[i + 1].getLabel();
-                    break;
-                }
-        return Database.update(opportunity);
     }
 
     @AuraEnabled
