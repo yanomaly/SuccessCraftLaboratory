@@ -52,7 +52,7 @@ public with sharing class CustomerStatistics {
             preResult = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account];
         else 
             preResult = [SELECT Name, Id, (SELECT Name, CloseDate, CreatedDate, Amount, Id FROM Opportunities WHERE StageName = 'Closed Won') FROM Account WHERE Name LIKE :nameSearch];
-        return sortEmptyAccounts(preResult);   
+        return sortEmptyAccounts(preResult);
     }
 
     public static List<Account> findAccountsByTotalAmount(String amountStr){

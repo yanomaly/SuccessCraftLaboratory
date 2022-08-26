@@ -41,7 +41,8 @@
   <template if:true={recordId}>
     <template if:true={accountOpportunity}>
       <template for:each={accountOpportunity} for:item="acc">
-        <p key={acc.key}>{acc.key}</p>
+        <lightning-accordion key={acc.key} allow-multiple-sections-open=true>
+          <lightning-accordion-section name={acc.key} label={acc.key}>
         <template if:true={acc.value}>
           <table key={acc.key}>
             <tr><th>Name</th><th>Created Date</th><th>Close Date</th><th>Amount</th><th>Sold Products</th></tr>
@@ -51,6 +52,8 @@
             </template>
           </table>
         </template>
+          </lightning-accordion-section>
+        </lightning-accordion>
       </template>
     </template>
   </template>

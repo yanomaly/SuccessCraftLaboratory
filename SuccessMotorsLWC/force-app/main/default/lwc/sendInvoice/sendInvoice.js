@@ -11,7 +11,7 @@ import invoiceDB from '@salesforce/apex/EmailSender.invoiceDB';
 export default class SendInvoice extends NavigationMixin (LightningElement) {
   @api recordId = '';
   @track invoiceId = ' ';
-  @track emailBody = ' '
+  @track emailBody = ' ';
   @track contact = [];
   @track opportunity = [];
 
