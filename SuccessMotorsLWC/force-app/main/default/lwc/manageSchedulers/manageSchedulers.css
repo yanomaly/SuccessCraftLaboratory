@@ -4,11 +4,6 @@
   background-color: white;
 }
 
-.window{
-  border: 1px solid black;
-  position: relative;
-}
-
 .header{
   position: relative;
   left: 40%;
@@ -21,18 +16,19 @@
 }
 
 lightning-button-group{
-  width: 30%;
   position: relative;
-  left: 75%;
+  display: block;
+  left: 100%;
+  transform: translate(-31%, -10%);
 }
 
 .pageControlls{
-  margin-left: 2%;
-  margin-right: 2%;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
 table{
-  width: 90%;
+  width: 95%;
   position: relative;
   top: 10%;
   margin: 3%;
